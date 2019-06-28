@@ -8,11 +8,11 @@ def load_loc(filename):
     return text
 
 # Method that recieve two params: the path of the directory and the vector that will be stored the texts from the files
-def load_files_directory(directory, vector):
+def load_files_directory(directory, arr):
     for filename in listdir(directory):
         path = directory + '/' + filename
         #call another method that takes the read of files
-        vector.append(load_loc(path))
+        arr.append(load_loc(path))
 
 # All the directories names
 directory_test_neg = './Dataset/test/neg'
@@ -32,7 +32,30 @@ load_files_directory(directory_test_pos,sentences_test_pos)
 load_files_directory(directory_train_neg,sentences_train_neg)
 load_files_directory(directory_train_pos,sentences_train_pos)
 
+
+##############################################################################################
+
+######################### PRE-PROCESSING DATA 
+###### TOKENIZING
+
+from nltk.tokenize import word_tokenize
+
+def tokenize_words(arr, arr_tokenized):
+    for i in range(len(arr)):
+        data_split = word_tokenize(arr[i])
+        arr_tokenized.append(data_split)
+
+data_split_test_neg = []
+data_split_test_pos = []
+data_split_train_neg = []
+data_split_train_pos = []
+
+tokenize_words(sentences_test_neg,data_split_test_neg)
+tokenize_words(sentences_test_pos,data_split_test_pos)
+tokenize_words(sentences_train_neg,data_split_train_neg)
+tokenize_words(sentences_train_pos,data_split_train_pos)
+
 # Test to see if the arrays are recieving the correct message;
-for i in range(len(sentences_test_neg)):
-    print(sentences_train_neg[i], "\n")
+for i in range(len(data_split_train_pos)):
+    print(data_split_train_pos[i], "\n")
 
