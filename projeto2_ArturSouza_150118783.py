@@ -27,9 +27,9 @@ sentences_train_neg = []
 sentences_train_pos = []
 
 # Inicializing all vectors
-load_files_directory(directory_test_neg,sentences_test_neg)
-load_files_directory(directory_test_pos,sentences_test_pos)
-load_files_directory(directory_train_neg,sentences_train_neg)
+# load_files_directory(directory_test_neg,sentences_test_neg)
+# load_files_directory(directory_test_pos,sentences_test_pos)
+# load_files_directory(directory_train_neg,sentences_train_neg)
 load_files_directory(directory_train_pos,sentences_train_pos)
 
 print("Finish reading dataset\n")
@@ -59,14 +59,19 @@ data_split_train_pos = []
 # tokenize_words(sentences_train_neg,data_split_train_neg)
 tokenize_words(sentences_train_pos,data_split_train_pos)
 
+# print(data_split_test_pos)
+# input()
 print("Finish tokenize\n")
 
 ###### LOWERCASE WORDS
 
 def lowercase(arr, arr_lower):
     for i in range(len(arr)):
+        arr_aux = []
         for w in arr[i]:
-            arr_lower.append(w.lower())
+            arr_aux.append(w.lower())
+
+        arr_lower.append(arr_aux)
 
 # All the new array's name
 lowercase_test_neg = []        
@@ -78,21 +83,24 @@ lowercase_train_pos = []
 # lowercase(data_split_test_pos,lowercase_test_pos)
 # lowercase(data_split_train_neg,lowercase_train_neg)
 lowercase(data_split_train_pos,lowercase_train_pos)
-
+# print(lowercase_train_pos)
+# input()
 print("Finish Lowercase\n")
-
 ###### STOP-WORDS
 
 from nltk.corpus import stopwords
 
 # Method that need two params, first the array that has been tokenized and the second the new array that will store all the words that are different from the stopWords
 def stop_words(arr, arr_filteredWords):
-    for w  in arr :
-        if not w in stopWords:
-            arr_filteredWords.append(w)
+    for i in range(len(arr)):
+        arr_aux = []
+        for w  in arr[i] :
+            if not w in stopWords:
+                arr_aux.append(w)
+        arr_filteredWords.append(arr_aux)
 
 stopWords = stopwords.words('english')
-stopWords.extend(['-', ')', '(', 'The', 'This', '...', '!', '--', 'A','.','?',',', 'I', '/', 'br', '<', '>', 'a', '&', ':', "'s", "''", "'re", "'ve","``"])
+stopWords.extend(['-', ')', '(', '}' , '{' ,'The', 'This', '...', '!', '--', 'A','.','?',',', 'I', '/', 'br', '<', '>', 'a', '&', ':', "'s", "''", "'re", "'ve","``"])
 
 
 # All the new array's name
@@ -107,6 +115,8 @@ filtered_word_train_pos = []
 # stop_words(lowercase_train_neg, filtered_word_train_neg)
 stop_words(lowercase_train_pos, filtered_word_train_pos)
 
+# print(filtered_word_train_pos)
+# input()
 print("Finish stop word\n")
 
 ###### LEMMATIZE WORDS (No plural)
@@ -114,10 +124,13 @@ print("Finish stop word\n")
 from nltk.stem import WordNetLemmatizer
 lemmatizer = WordNetLemmatizer()
 
-# Method that recieves two params, first the one 
+# Method that recieves two params, first the original one and the second the array that will be transform
 def lemmatize(arr, arr_lemmatized):
     for i in range(len(arr)):
-        arr_lemmatized.append(lemmatizer.lemmatize(arr[i]))
+        aux_lemma = []
+        for j in arr[i]:
+            aux_lemma.append(lemmatizer.lemmatize(j))    
+        arr_lemmatized.append(aux_lemma)
 
 # All the new array's name
 lemmatized_word_test_neg = []
@@ -127,10 +140,12 @@ lemmatized_word_train_pos = []
 
 # Calling method to all new array
 # lemmatize(filtered_word_test_neg, lemmatized_word_test_neg)
-# lemmatize(filtered_word_test_pos, lemmatized_word_test_pos)
+lemmatize(filtered_word_test_pos, lemmatized_word_test_pos)
 # lemmatize(filtered_word_train_neg, lemmatized_word_train_neg)
 lemmatize(filtered_word_train_pos, lemmatized_word_train_pos)
 
+# print(lemmatized_word_train_pos)
+# input()
 print("Finish lemmatizing\n")
 
 
@@ -142,7 +157,10 @@ porter = PorterStemmer()
 
 def porterStemmer(arr, arr_potter):
     for i in range(len(arr)):
-        arr_potter.append(porter.stem(arr[i]))
+        aux_lemma = []
+        for j in arr[i]:
+            aux_lemma.append(porter.stem(j))
+        arr_potter.append(aux_lemma)
 
 porter_word_test_neg = []        
 porter_word_test_pos = []        
@@ -154,6 +172,8 @@ porter_word_train_pos = []
 # porterStemmer(lemmatized_word_train_neg, porter_word_train_neg)     
 porterStemmer(lemmatized_word_train_pos, porter_word_train_pos) 
 
+print(porter_word_train_pos)
+input()
 print("Finish PorterStemmer\n")    
 
 
@@ -165,11 +185,17 @@ from sklearn.feature_extraction.text import CountVectorizer
 import numpy as np
 vectorizer = CountVectorizer()
 
-X = vectorizer.fit_transform(porter_word_train_pos)   
-# Name that were separeted for the train, look that all the names are, by default, in lowercase and in alphabetical order
-
+X_pos = vectorizer.fit_transform(porter_word_train_pos)   
 terms = vectorizer.get_feature_names()
-freqs = X.sum(axis=0).A1
+freqs = X_pos.sum(axis=0).A1
 result = dict(zip(terms, freqs))
 print(sorted(result.items(), key = 
              lambda kv:(kv[1], kv[0]), reverse=True ))
+
+X_pos_test = vectorizer.fit_transform(porter_word_test_pos)
+terms = vectorizer.get_feature_names()
+freqs = X_pos_test.sum(axis=0).A1
+result = dict(zip(terms, freqs))
+print(sorted(result.items(), key = 
+             lambda kv:(kv[1], kv[0]), reverse=True ))
+# Name that were separeted for the train, look that all the names are, by default, in lowercase and in alphabetical order
