@@ -59,8 +59,6 @@ data_split_train_pos = []
 # tokenize_words(sentences_train_neg,data_split_train_neg)
 tokenize_words(sentences_train_pos,data_split_train_pos)
 
-# print(data_split_train_pos)
-# input()
 print("Finish tokenize\n")
 
 ###### LOWERCASE WORDS
@@ -80,7 +78,6 @@ lowercase_train_pos = []
 # lowercase(data_split_test_pos,lowercase_test_pos)
 # lowercase(data_split_train_neg,lowercase_train_neg)
 lowercase(data_split_train_pos,lowercase_train_pos)
-# print(lowercase_train_pos)
 
 print("Finish Lowercase\n")
 
@@ -112,7 +109,7 @@ stop_words(lowercase_train_pos, filtered_word_train_pos)
 
 print("Finish stop word\n")
 
-###### LEMMATIZE WORDS
+###### LEMMATIZE WORDS (No plural)
 
 from nltk.stem import WordNetLemmatizer
 lemmatizer = WordNetLemmatizer()
@@ -136,6 +133,55 @@ lemmatize(filtered_word_train_pos, lemmatized_word_train_pos)
 
 print("Finish lemmatizing\n")
 
-# Test to see if the arrays are recieving the correct message;
 
-print(lemmatized_word_train_pos)
+###### PORTERSTEMMER WORDS
+
+from nltk.stem import PorterStemmer
+
+porter = PorterStemmer()
+
+def porterStemmer(arr, arr_potter):
+    for i in range(len(arr)):
+        arr_potter.append(porter.stem(arr[i]))
+
+porter_word_test_neg = []        
+porter_word_test_pos = []        
+porter_word_train_neg = []        
+porter_word_train_pos = []   
+
+# porterStemmer(lemmatized_word_test_neg, porter_word_test_neg)     
+# porterStemmer(lemmatized_word_test_pos, porter_word_test_pos)     
+# porterStemmer(lemmatized_word_train_neg, porter_word_train_neg)     
+porterStemmer(lemmatized_word_train_pos, porter_word_train_pos) 
+
+print("Finish PorterStemmer\n")    
+
+# Test to see if the arrays are recieving the correct message;
+# print(porter_word_train_pos)
+
+
+######################### END PRE-PROCESSING DATA 
+##############################################################################################
+######################### BOW
+
+from sklearn.feature_extraction.text import CountVectorizer
+import numpy as np
+vectorizer = CountVectorizer()
+
+X = vectorizer.fit_transform(porter_word_train_pos)   
+# Name that were separeted for the train, look that all the names are, by default, in lowercase and in alphabetical order
+
+terms = vectorizer.get_feature_names()
+freqs = X.sum(axis=0).A1
+result = dict(zip(terms, freqs))
+print(sorted(result.items(), key = 
+             lambda kv:(kv[1], kv[0]), reverse=True ))
+# # Search for how many words are repeated 
+# count_names = X.toarray()	
+# # Sum every word
+# sum_array = []
+# for i in range(len(names)):
+#     sum_index = 0
+#     for j in range(len(porter_word_train_pos)):
+#         sum_index += porter_word_train_pos[j][i]
+#     sum_array.append(sum_index)
