@@ -156,9 +156,6 @@ porterStemmer(lemmatized_word_train_pos, porter_word_train_pos)
 
 print("Finish PorterStemmer\n")    
 
-# Test to see if the arrays are recieving the correct message;
-# print(porter_word_train_pos)
-
 
 ######################### END PRE-PROCESSING DATA 
 ##############################################################################################
@@ -176,12 +173,3 @@ freqs = X.sum(axis=0).A1
 result = dict(zip(terms, freqs))
 print(sorted(result.items(), key = 
              lambda kv:(kv[1], kv[0]), reverse=True ))
-# # Search for how many words are repeated 
-# count_names = X.toarray()	
-# # Sum every word
-# sum_array = []
-# for i in range(len(names)):
-#     sum_index = 0
-#     for j in range(len(porter_word_train_pos)):
-#         sum_index += porter_word_train_pos[j][i]
-#     sum_array.append(sum_index)
