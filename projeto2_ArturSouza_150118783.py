@@ -59,8 +59,6 @@ tokenize_words(sentences_test_pos,data_split_test_pos)
 tokenize_words(sentences_train_neg,data_split_train_neg)
 tokenize_words(sentences_train_pos,data_split_train_pos)
 
-# print(data_split_test_pos)
-# input()
 print("Finish tokenize\n")
 
 ###### LOWERCASE WORDS
@@ -83,8 +81,6 @@ lowercase(data_split_test_neg,lowercase_test_neg)
 lowercase(data_split_test_pos,lowercase_test_pos)
 lowercase(data_split_train_neg,lowercase_train_neg)
 lowercase(data_split_train_pos,lowercase_train_pos)
-# print(lowercase_train_pos)
-# input()
 print("Finish Lowercase\n")
 ###### STOP-WORDS
 
@@ -115,8 +111,6 @@ stop_words(lowercase_test_pos, filtered_word_test_pos)
 stop_words(lowercase_train_neg, filtered_word_train_neg)
 stop_words(lowercase_train_pos, filtered_word_train_pos)
 
-# print(filtered_word_train_pos)
-# input()
 print("Finish stop word\n")
 
 ###### LEMMATIZE WORDS (No plural)
@@ -144,8 +138,6 @@ lemmatize(filtered_word_test_pos, lemmatized_word_test_pos)
 lemmatize(filtered_word_train_neg, lemmatized_word_train_neg)
 lemmatize(filtered_word_train_pos, lemmatized_word_train_pos)
 
-# print(lemmatized_word_train_pos)
-# input()
 print("Finish lemmatizing\n")
 
 
@@ -172,16 +164,6 @@ porterStemmer(lemmatized_word_test_pos, porter_word_test_pos)
 porterStemmer(lemmatized_word_train_neg, porter_word_train_neg)     
 porterStemmer(lemmatized_word_train_pos, porter_word_train_pos) 
 
-# print(porter_word_train_pos)
-# print(len(porter_word_train_pos))
-# print(porter_word_train_neg)
-# print(len(porter_word_train_neg))
-# print(porter_word_test_pos)
-# print(len(porter_word_test_pos))
-# print(porter_word_test_neg)
-# print(len(porter_word_test_neg))
-# input()
-# print("Finish PorterStemmer\n")    
 
 ######################### END PRE-PROCESSING DATA 
 ##############################################################################################
@@ -216,11 +198,6 @@ X_train_final = []
 X_test_final = sumArray_test_neg + sumArray_test_pos
 X_train_final = sumArray_train_neg + sumArray_train_pos
 
-# print(len(X_test_final))
-# print(len(X_train_final))
-# input()
-
-# print(X_test_final)
 ######################### END TRANSFORMING DATA TO BE ABLE TO TRAIN
 ##############################################################################################
 ######################### LOGISTIC REGRESSION
@@ -235,41 +212,41 @@ from sklearn.linear_model import LogisticRegression
 from sklearn.metrics import accuracy_score
 from sklearn.model_selection import train_test_split
 from sklearn.model_selection import cross_val_score
+from sklearn.model_selection import cross_val_predict
 from sklearn import svm
-from sklearn import tree
+from sklearn.metrics import accuracy_score, log_loss, confusion_matrix, precision_score, recall_score,f1_score
 from sklearn.neighbors import KNeighborsClassifier
 from sklearn.svm import SVC, LinearSVC, NuSVC
 from sklearn.tree import DecisionTreeClassifier
 from sklearn.ensemble import RandomForestClassifier, AdaBoostClassifier, GradientBoostingClassifier
 from sklearn.naive_bayes import GaussianNB
-
+from sklearn.discriminant_analysis import LinearDiscriminantAnalysis
+from sklearn.discriminant_analysis import QuadraticDiscriminantAnalysis
+import pandas as pd
 target = [1 if i < 12500 else 0 for i in range(25000)]
-# print(target)
+
 X_train, X_test, y_train, y_test = train_test_split(
     X, target, train_size = 0.75
 )
 
 lr = LogisticRegression(C=0.5)
 lr.fit(X_train, y_train)
-print ('LOGISTIC REGRESSION - Accuracy for C= : ', accuracy_score(y_test, lr.predict(X_test)))
-knn = KNeighborsClassifier(3)
+# print ('LOGISTIC REGRESSION - Accuracy for C= : ', accuracy_score(y_test, lr.predict(X_test)))
+knn = KNeighborsClassifier(n_neighbors=3,algorithm='kd_tree')
 knn.fit(X_train,y_train)
-print("KNN - Accuracy = ", accuracy_score(y_test, knn.predict(X_test)) )
+# print("KNN - Accuracy = ", accuracy_score(y_test, knn.predict(X_test)) )
 tree = DecisionTreeClassifier()
 tree.fit(X_train,y_train)
-print("Decision Tree Classifier - Accuracy = ", accuracy_score(y_test, knn.predict(X_test)) )
+# print("Decision Tree Classifier - Accuracy = ", accuracy_score(y_test, knn.predict(X_test)) )
 rfc = RandomForestClassifier()
 rfc.fit(X_train,y_train)
-print("Random Forest Classifier - Accuracy = ", accuracy_score(y_test, knn.predict(X_test)) )
+# print("Random Forest Classifier - Accuracy = ", accuracy_score(y_test, knn.predict(X_test)) )
 abc = AdaBoostClassifier()
 abc.fit(X_train,y_train)
-print("Ada Boost Classifier - Accuracy = ", accuracy_score(y_test, knn.predict(X_test)) )
+# print("Ada Boost Classifier - Accuracy = ", accuracy_score(y_test, knn.predict(X_test)) )
 gbc = GradientBoostingClassifier()
 gbc.fit(X_train,y_train)
-print("Gradient Boosting Classifier - Accuracy = ", accuracy_score(y_test, knn.predict(X_test)) )
-gnb = GaussianNB()
-gnb.fit(X_train,y_train)
-print("GaussianNB Classifier - Accuracy = ", accuracy_score(y_test, knn.predict(X_test)) )
+# print("Gradient Boosting Classifier - Accuracy = ", accuracy_score(y_test, knn.predict(X_test)) )
 ######################### CROSS VALIDATION
 
 ############ Logistic Regression
@@ -290,6 +267,7 @@ print ('\nRevocacao: \n',recall_score(target, target_pred, average=None))
 #F1-Score
 print ('\nF1-Score: \n',f1_score(target, target_pred, average=None))
 
+############ KNN
 print("=" * 40)
 print("KNN\n\n")
 target_pred = cross_val_predict(knn,X,target,cv=5 )
@@ -307,8 +285,9 @@ print ('\nRevocacao: \n',recall_score(target, target_pred, average=None))
 #F1-Score
 print ('\nF1-Score: \n',f1_score(target, target_pred, average=None))
 
+############ Decision Tree
 print("=" * 40)
-print("Decision tree Classifier\n\n")
+print("Decision Tree Classifier\n\n")
 target_pred = cross_val_predict(tree,X,target,cv=5 )
 print ('\y_pred : \n' ,target_pred)
 conf_mat = confusion_matrix(target, target_pred)
@@ -324,6 +303,7 @@ print ('\nRevocacao: \n',recall_score(target, target_pred, average=None))
 #F1-Score
 print ('\nF1-Score: \n',f1_score(target, target_pred, average=None))
 
+############ Random Forest
 print("=" * 40)
 print("Random Forest Classifier\n\n")
 target_pred = cross_val_predict(rfc,X,target,cv=5 )
@@ -341,6 +321,7 @@ print ('\nRevocacao: \n',recall_score(target, target_pred, average=None))
 #F1-Score
 print ('\nF1-Score: \n',f1_score(target, target_pred, average=None))
 
+############ Ada Boosting
 print("=" * 40)
 print("Ada Boost Classifier\n\n")
 target_pred = cross_val_predict(abc,X,target,cv=5 )
@@ -358,6 +339,7 @@ print ('\nRevocacao: \n',recall_score(target, target_pred, average=None))
 #F1-Score
 print ('\nF1-Score: \n',f1_score(target, target_pred, average=None))
 
+############ Gadient Boosting 
 print("=" * 40)
 print("Gradient Boosting Classifier\n\n")
 target_pred = cross_val_predict(gbc,X,target,cv=5 )
@@ -377,19 +359,3 @@ print ('\nF1-Score: \n',f1_score(target, target_pred, average=None))
 
 print("=" * 40)
 
-    
-
-# X_pos = vectorizer.fit_transform(porter_word_train_pos)   
-# terms = vectorizer.get_feature_names()
-# freqs = X_pos.sum(axis=0).A1
-# result = dict(zip(terms, freqs))
-# print(sorted(result.items(), key = 
-#              lambda kv:(kv[1], kv[0]), reverse=True ))
-
-# X_pos_test = vectorizer.fit_transform(porter_word_test_pos)
-# terms = vectorizer.get_feature_names()
-# freqs = X_pos_test.sum(axis=0).A1
-# result = dict(zip(terms, freqs))
-# print(sorted(result.items(), key = 
-#              lambda kv:(kv[1], kv[0]), reverse=True ))
-# Name that were separeted for the train, look that all the names are, by default, in lowercase and in alphabetical order
