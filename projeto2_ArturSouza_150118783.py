@@ -244,19 +244,12 @@ X_train, X_test, y_train, y_test = train_test_split(
     X, target, train_size = 0.75
 )
 
-for c in [0.01, 0.05, 0.25, 0.5, 1]:
-    
-    lr = LogisticRegression(C=c)
-    lr.fit(X_train, y_train)
-    print ('LOGISTIC REGRESSION - Accuracy for C=',c,' : ', accuracy_score(y_test, lr.predict(X_test)))
-    clf = svm.SVC(kernel='linear', C=c).fit(X_train, y_train)
-    print('SUPPORT VECTOR CLASSIFICATION - Accuracy', c, ' : ',  clf.score(X_test, y_test) ) 
-    clf = svm.SVC(kernel='linear', C=c)
-    scores = cross_val_score(clf, iris.data, iris.target, cv=5)
-    print('CROSS VALIDATION - Accuracy mean: ',scores.mean())
-    clf = tree.DecisionTreeClassifier()
-    clf = clf.fit(iris.data, iris.target)
-
+lr = LogisticRegression(C=0.5)
+lr.fit(X_train, y_train)
+print ('LOGISTIC REGRESSION - Accuracy for C=',c,' : ', accuracy_score(y_test, lr.predict(X_test)))
+knn = KNeighborsClassifier(3)
+knn.fit(X_train,y_train)
+print("KNN - Accuracy = ", accuracy_score(y_test, knn.predict(X_test)) )
 ######################### CROSS VALIDATION
 
 
