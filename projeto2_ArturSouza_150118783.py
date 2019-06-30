@@ -237,6 +237,11 @@ from sklearn.model_selection import train_test_split
 from sklearn.model_selection import cross_val_score
 from sklearn import svm
 from sklearn import tree
+from sklearn.neighbors import KNeighborsClassifier
+from sklearn.svm import SVC, LinearSVC, NuSVC
+from sklearn.tree import DecisionTreeClassifier
+from sklearn.ensemble import RandomForestClassifier, AdaBoostClassifier, GradientBoostingClassifier
+from sklearn.naive_bayes import GaussianNB
 
 target = [1 if i < 12500 else 0 for i in range(25000)]
 # print(target)
@@ -246,10 +251,25 @@ X_train, X_test, y_train, y_test = train_test_split(
 
 lr = LogisticRegression(C=0.5)
 lr.fit(X_train, y_train)
-print ('LOGISTIC REGRESSION - Accuracy for C=',c,' : ', accuracy_score(y_test, lr.predict(X_test)))
+print ('LOGISTIC REGRESSION - Accuracy for C= : ', accuracy_score(y_test, lr.predict(X_test)))
 knn = KNeighborsClassifier(3)
 knn.fit(X_train,y_train)
 print("KNN - Accuracy = ", accuracy_score(y_test, knn.predict(X_test)) )
+tree = DecisionTreeClassifier()
+tree.fit(X_train,y_train)
+print("Decision Tree Classifier - Accuracy = ", accuracy_score(y_test, knn.predict(X_test)) )
+rfc = RandomForestClassifier()
+rfc.fit(X_train,y_train)
+print("Random Forest Classifier - Accuracy = ", accuracy_score(y_test, knn.predict(X_test)) )
+abc = AdaBoostClassifier()
+abc.fit(X_train,y_train)
+print("Ada Boost Classifier - Accuracy = ", accuracy_score(y_test, knn.predict(X_test)) )
+gbc = GradientBoostingClassifier()
+gbc.fit(X_train,y_train)
+print("Gradient Boosting Classifier - Accuracy = ", accuracy_score(y_test, knn.predict(X_test)) )
+gnb = GaussianNB()
+gnb.fit(X_train,y_train)
+print("GaussianNB Classifier - Accuracy = ", accuracy_score(y_test, knn.predict(X_test)) )
 ######################### CROSS VALIDATION
 
 
