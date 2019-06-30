@@ -272,8 +272,112 @@ gnb.fit(X_train,y_train)
 print("GaussianNB Classifier - Accuracy = ", accuracy_score(y_test, knn.predict(X_test)) )
 ######################### CROSS VALIDATION
 
+############ Logistic Regression
+print("=" * 40)
+print("Logistic Regression\n\n")
+target_pred = cross_val_predict(lr,X,target,cv=5 )
+print ('\n y_pred : \n' ,target_pred)
+conf_mat = confusion_matrix(target, target_pred)
+print ('\nConfusion matrix : \n',conf_mat)
 
 
+#Acuracia
+print ('\nAcuracia: \n',accuracy_score(target, target_pred))
+#Precisão
+print ('\nPrecisao: \n',precision_score(target, target_pred, average=None)) 
+#Revocação
+print ('\nRevocacao: \n',recall_score(target, target_pred, average=None))
+#F1-Score
+print ('\nF1-Score: \n',f1_score(target, target_pred, average=None))
+
+print("=" * 40)
+print("KNN\n\n")
+target_pred = cross_val_predict(knn,X,target,cv=5 )
+print ('\y_pred : \n' ,target_pred)
+conf_mat = confusion_matrix(target, target_pred)
+print ('\nConfusion matrix : \n',conf_mat)
+
+
+#Acuracia
+print ('\nAcuracia: \n',accuracy_score(target, target_pred))
+#Precisão
+print ('\nPrecisao: \n',precision_score(target, target_pred, average=None)) 
+#Revocação
+print ('\nRevocacao: \n',recall_score(target, target_pred, average=None))
+#F1-Score
+print ('\nF1-Score: \n',f1_score(target, target_pred, average=None))
+
+print("=" * 40)
+print("Decision tree Classifier\n\n")
+target_pred = cross_val_predict(tree,X,target,cv=5 )
+print ('\y_pred : \n' ,target_pred)
+conf_mat = confusion_matrix(target, target_pred)
+print ('\nConfusion matrix : \n',conf_mat)
+
+
+#Acuracia
+print ('\nAcuracia: \n',accuracy_score(target, target_pred))
+#Precisão
+print ('\nPrecisao: \n',precision_score(target, target_pred, average=None)) 
+#Revocação
+print ('\nRevocacao: \n',recall_score(target, target_pred, average=None))
+#F1-Score
+print ('\nF1-Score: \n',f1_score(target, target_pred, average=None))
+
+print("=" * 40)
+print("Random Forest Classifier\n\n")
+target_pred = cross_val_predict(rfc,X,target,cv=5 )
+print ('\y_pred : \n' ,target_pred)
+conf_mat = confusion_matrix(target, target_pred)
+print ('\nConfusion matrix : \n',conf_mat)
+
+
+#Acuracia
+print ('\nAcuracia: \n',accuracy_score(target, target_pred))
+#Precisão
+print ('\nPrecisao: \n',precision_score(target, target_pred, average=None)) 
+#Revocação
+print ('\nRevocacao: \n',recall_score(target, target_pred, average=None))
+#F1-Score
+print ('\nF1-Score: \n',f1_score(target, target_pred, average=None))
+
+print("=" * 40)
+print("Ada Boost Classifier\n\n")
+target_pred = cross_val_predict(abc,X,target,cv=5 )
+print ('\y_pred : \n' ,target_pred)
+conf_mat = confusion_matrix(target, target_pred)
+print ('\nConfusion matrix : \n',conf_mat)
+
+
+#Acuracia
+print ('\nAcuracia: \n',accuracy_score(target, target_pred))
+#Precisão
+print ('\nPrecisao: \n',precision_score(target, target_pred, average=None)) 
+#Revocação
+print ('\nRevocacao: \n',recall_score(target, target_pred, average=None))
+#F1-Score
+print ('\nF1-Score: \n',f1_score(target, target_pred, average=None))
+
+print("=" * 40)
+print("Gradient Boosting Classifier\n\n")
+target_pred = cross_val_predict(gbc,X,target,cv=5 )
+print ('\y_pred : \n' ,target_pred)
+conf_mat = confusion_matrix(target, target_pred)
+print ('\nConfusion matrix : \n',conf_mat)
+
+
+#Acuracia
+print ('\nAcuracia: \n',accuracy_score(target, target_pred))
+#Precisão
+print ('\nPrecisao: \n',precision_score(target, target_pred, average=None)) 
+#Revocação
+print ('\nRevocacao: \n',recall_score(target, target_pred, average=None))
+#F1-Score
+print ('\nF1-Score: \n',f1_score(target, target_pred, average=None))
+
+print("=" * 40)
+
+    
 
 # X_pos = vectorizer.fit_transform(porter_word_train_pos)   
 # terms = vectorizer.get_feature_names()
