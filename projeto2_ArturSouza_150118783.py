@@ -254,11 +254,11 @@ print ('\nConfusion matrix : \n',conf_mat)
 #Acuracia
 print ('\nAcuracia: \n',accuracy_score(target, target_pred))
 #Precisão
-print ('\nPrecisao: \n',precision_score(target, target_pred, average=None)) 
+print ('\nPrecisao: \n',precision_score(target, target_pred)) 
 #Revocação
-print ('\nRevocacao: \n',recall_score(target, target_pred, average=None))
+print ('\nRevocacao: \n',recall_score(target, target_pred))
 #F1-Score
-print ('\nF1-Score: \n',f1_score(target, target_pred, average=None))
+print ('\nF1-Score: \n',f1_score(target, target_pred))
 
 ############ KNN
 print("=" * 40)
@@ -271,11 +271,11 @@ print ('\nConfusion matrix : \n',conf_mat)
 #Acuracia
 print ('\nAcuracia: \n',accuracy_score(target, target_pred))
 #Precisão
-print ('\nPrecisao: \n',precision_score(target, target_pred, average=None)) 
+print ('\nPrecisao: \n',precision_score(target, target_pred)) 
 #Revocação
-print ('\nRevocacao: \n',recall_score(target, target_pred, average=None))
+print ('\nRevocacao: \n',recall_score(target, target_pred))
 #F1-Score
-print ('\nF1-Score: \n',f1_score(target, target_pred, average=None))
+print ('\nF1-Score: \n',f1_score(target, target_pred))
 
 ############ Decision Tree
 print("=" * 40)
@@ -288,11 +288,11 @@ print ('\nConfusion matrix : \n',conf_mat)
 #Acuracia
 print ('\nAcuracia: \n',accuracy_score(target, target_pred))
 #Precisão
-print ('\nPrecisao: \n',precision_score(target, target_pred, average=None)) 
+print ('\nPrecisao: \n',precision_score(target, target_pred)) 
 #Revocação
-print ('\nRevocacao: \n',recall_score(target, target_pred, average=None))
+print ('\nRevocacao: \n',recall_score(target, target_pred))
 #F1-Score
-print ('\nF1-Score: \n',f1_score(target, target_pred, average=None))
+print ('\nF1-Score: \n',f1_score(target, target_pred))
 
 ############ Random Forest
 print("=" * 40)
@@ -305,11 +305,11 @@ print ('\nConfusion matrix : \n',conf_mat)
 #Acuracia
 print ('\nAcuracia: \n',accuracy_score(target, target_pred))
 #Precisão
-print ('\nPrecisao: \n',precision_score(target, target_pred, average=None)) 
+print ('\nPrecisao: \n',precision_score(target, target_pred)) 
 #Revocação
-print ('\nRevocacao: \n',recall_score(target, target_pred, average=None))
+print ('\nRevocacao: \n',recall_score(target, target_pred))
 #F1-Score
-print ('\nF1-Score: \n',f1_score(target, target_pred, average=None))
+print ('\nF1-Score: \n',f1_score(target, target_pred))
 
 ############ Ada Boosting
 print("=" * 40)
@@ -322,11 +322,11 @@ print ('\nConfusion matrix : \n',conf_mat)
 #Acuracia
 print ('\nAcuracia: \n',accuracy_score(target, target_pred))
 #Precisão
-print ('\nPrecisao: \n',precision_score(target, target_pred, average=None)) 
+print ('\nPrecisao: \n',precision_score(target, target_pred)) 
 #Revocação
-print ('\nRevocacao: \n',recall_score(target, target_pred, average=None))
+print ('\nRevocacao: \n',recall_score(target, target_pred))
 #F1-Score
-print ('\nF1-Score: \n',f1_score(target, target_pred, average=None))
+print ('\nF1-Score: \n',f1_score(target, target_pred))
 
 ############ Gadient Boosting 
 print("=" * 40)
@@ -339,11 +339,11 @@ print ('\nConfusion matrix : \n',conf_mat)
 #Acuracia
 print ('\nAcuracia: \n',accuracy_score(target, target_pred))
 #Precisão
-print ('\nPrecisao: \n',precision_score(target, target_pred, average=None)) 
+print ('\nPrecisao: \n',precision_score(target, target_pred)) 
 #Revocação
-print ('\nRevocacao: \n',recall_score(target, target_pred, average=None))
+print ('\nRevocacao: \n',recall_score(target, target_pred))
 #F1-Score
-print ('\nF1-Score: \n',f1_score(target, target_pred, average=None))
+print ('\nF1-Score: \n',f1_score(target, target_pred))
 
 print("=" * 40)
 
