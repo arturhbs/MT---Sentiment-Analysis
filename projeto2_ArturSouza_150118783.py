@@ -1,3 +1,7 @@
+# Artur Henrique Brandão de Souza   
+# 150118783
+# Mineração de Texto - TAC 2019/1 
+
 from os import listdir
 
 # Method to read all files in a directory
