@@ -141,29 +141,30 @@ lemmatize(filtered_word_train_pos, lemmatized_word_train_pos)
 print("Finish lemmatizing\n")
 
 
-###### PORTERSTEMMER WORDS
+###### PORTERSTEMMER WORDS  It become ambiguous using these and Lemma. 
 
-from nltk.stem import PorterStemmer
+# from nltk.stem import PorterStemmer
 
-porter = PorterStemmer()
+# porter = PorterStemmer()
 
-def porterStemmer(arr, arr_potter):
-    for i in range(len(arr)):
-        aux_lemma = []
-        for j in arr[i]:
-            aux_lemma.append(porter.stem(j))
-        arr_potter.append(aux_lemma)
+# def porterStemmer(arr, arr_potter):
+#     for i in range(len(arr)):
+#         aux_lemma = []
+#         for j in arr[i]:
+#             aux_lemma.append(porter.stem(j))
+#         arr_potter.append(aux_lemma)
 
-porter_word_test_neg = []        
-porter_word_test_pos = []        
-porter_word_train_neg = []        
-porter_word_train_pos = []   
+# porter_word_test_neg = []        
+# porter_word_test_pos = []        
+# porter_word_train_neg = []        
+# porter_word_train_pos = []   
 
-porterStemmer(lemmatized_word_test_neg, porter_word_test_neg)     
-porterStemmer(lemmatized_word_test_pos, porter_word_test_pos)     
-porterStemmer(lemmatized_word_train_neg, porter_word_train_neg)     
-porterStemmer(lemmatized_word_train_pos, porter_word_train_pos) 
+# porterStemmer(lemmatized_word_test_neg, porter_word_test_neg)     
+# porterStemmer(lemmatized_word_test_pos, porter_word_test_pos)     
+# porterStemmer(lemmatized_word_train_neg, porter_word_train_neg)     
+# porterStemmer(lemmatized_word_train_pos, porter_word_train_pos) 
 
+# print("Finish PorterStemmer")
 
 ######################### END PRE-PROCESSING DATA 
 ##############################################################################################
@@ -184,10 +185,10 @@ sumArray_train_neg = []
 sumArray_train_pos = []
 
 
-sumArrayList(porter_word_test_neg,sumArray_test_neg)
-sumArrayList(porter_word_test_pos,sumArray_test_pos)
-sumArrayList(porter_word_train_neg,sumArray_train_neg)
-sumArrayList(porter_word_train_pos,sumArray_train_pos)
+sumArrayList(lemmatized_word_test_neg,sumArray_test_neg)
+sumArrayList(lemmatized_word_test_pos,sumArray_test_pos)
+sumArrayList(lemmatized_word_train_neg,sumArray_train_neg)
+sumArrayList(lemmatized_word_train_pos,sumArray_train_pos)
 
 print("Finish Sum Array List")
 ###### SUM LIST OF TRAINS AND TEST
@@ -202,33 +203,25 @@ X_train_final = sumArray_train_neg + sumArray_train_pos
 ##############################################################################################
 ######################### LOGISTIC REGRESSION
 
+
+from sklearn.model_selection import train_test_split, cross_val_score, cross_val_predict
+from sklearn.metrics import accuracy_score, confusion_matrix, precision_score, recall_score,f1_score
+from sklearn.linear_model import LogisticRegression
+from sklearn.neighbors import KNeighborsClassifier
+from sklearn.tree import DecisionTreeClassifier
+from sklearn.ensemble import RandomForestClassifier, AdaBoostClassifier, GradientBoostingClassifier
 from sklearn.feature_extraction.text import CountVectorizer
-import numpy as np
+
 cv = CountVectorizer(binary=True)
 X = cv.fit_transform(X_train_final)
 X_test = cv.fit_transform(X_test_final)
 
-from sklearn.linear_model import LogisticRegression
-from sklearn.metrics import accuracy_score
-from sklearn.model_selection import train_test_split
-from sklearn.model_selection import cross_val_score
-from sklearn.model_selection import cross_val_predict
-from sklearn import svm
-from sklearn.metrics import accuracy_score, log_loss, confusion_matrix, precision_score, recall_score,f1_score
-from sklearn.neighbors import KNeighborsClassifier
-from sklearn.svm import SVC, LinearSVC, NuSVC
-from sklearn.tree import DecisionTreeClassifier
-from sklearn.ensemble import RandomForestClassifier, AdaBoostClassifier, GradientBoostingClassifier
-from sklearn.naive_bayes import GaussianNB
-from sklearn.discriminant_analysis import LinearDiscriminantAnalysis
-from sklearn.discriminant_analysis import QuadraticDiscriminantAnalysis
-import pandas as pd
 target = [1 if i < 12500 else 0 for i in range(25000)]
 
 X_train, X_test, y_train, y_test = train_test_split(
     X, target, train_size = 0.75
 )
-
+### Preparing Classifiers
 lr = LogisticRegression(C=0.5)
 lr.fit(X_train, y_train)
 # print ('LOGISTIC REGRESSION - Accuracy for C= : ', accuracy_score(y_test, lr.predict(X_test)))
@@ -247,13 +240,13 @@ abc.fit(X_train,y_train)
 gbc = GradientBoostingClassifier()
 gbc.fit(X_train,y_train)
 # print("Gradient Boosting Classifier - Accuracy = ", accuracy_score(y_test, knn.predict(X_test)) )
+
 ######################### CROSS VALIDATION
 
 ############ Logistic Regression
 print("=" * 40)
 print("Logistic Regression\n\n")
 target_pred = cross_val_predict(lr,X,target,cv=5 )
-print ('\n y_pred : \n' ,target_pred)
 conf_mat = confusion_matrix(target, target_pred)
 print ('\nConfusion matrix : \n',conf_mat)
 
@@ -271,7 +264,6 @@ print ('\nF1-Score: \n',f1_score(target, target_pred, average=None))
 print("=" * 40)
 print("KNN\n\n")
 target_pred = cross_val_predict(knn,X,target,cv=5 )
-print ('\y_pred : \n' ,target_pred)
 conf_mat = confusion_matrix(target, target_pred)
 print ('\nConfusion matrix : \n',conf_mat)
 
@@ -289,7 +281,6 @@ print ('\nF1-Score: \n',f1_score(target, target_pred, average=None))
 print("=" * 40)
 print("Decision Tree Classifier\n\n")
 target_pred = cross_val_predict(tree,X,target,cv=5 )
-print ('\y_pred : \n' ,target_pred)
 conf_mat = confusion_matrix(target, target_pred)
 print ('\nConfusion matrix : \n',conf_mat)
 
@@ -307,7 +298,6 @@ print ('\nF1-Score: \n',f1_score(target, target_pred, average=None))
 print("=" * 40)
 print("Random Forest Classifier\n\n")
 target_pred = cross_val_predict(rfc,X,target,cv=5 )
-print ('\y_pred : \n' ,target_pred)
 conf_mat = confusion_matrix(target, target_pred)
 print ('\nConfusion matrix : \n',conf_mat)
 
@@ -325,7 +315,6 @@ print ('\nF1-Score: \n',f1_score(target, target_pred, average=None))
 print("=" * 40)
 print("Ada Boost Classifier\n\n")
 target_pred = cross_val_predict(abc,X,target,cv=5 )
-print ('\y_pred : \n' ,target_pred)
 conf_mat = confusion_matrix(target, target_pred)
 print ('\nConfusion matrix : \n',conf_mat)
 
@@ -343,7 +332,6 @@ print ('\nF1-Score: \n',f1_score(target, target_pred, average=None))
 print("=" * 40)
 print("Gradient Boosting Classifier\n\n")
 target_pred = cross_val_predict(gbc,X,target,cv=5 )
-print ('\y_pred : \n' ,target_pred)
 conf_mat = confusion_matrix(target, target_pred)
 print ('\nConfusion matrix : \n',conf_mat)
 
