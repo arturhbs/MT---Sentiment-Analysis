@@ -31,9 +31,9 @@ sentences_train_neg = []
 sentences_train_pos = []
 
 # Inicializing all vectors
-# load_files_directory(directory_test_neg,sentences_test_neg)
+load_files_directory(directory_test_neg,sentences_test_neg)
 load_files_directory(directory_test_pos,sentences_test_pos)
-# load_files_directory(directory_train_neg,sentences_train_neg)
+load_files_directory(directory_train_neg,sentences_train_neg)
 load_files_directory(directory_train_pos,sentences_train_pos)
 
 print("Finish reading dataset\n")
@@ -164,7 +164,7 @@ print("Finish lemmatizing\n")
 # porter_word_train_pos = []   
 
 # porterStemmer(lemmatized_word_test_neg, porter_word_test_neg)     
-porterStemmer(lemmatized_word_test_pos, porter_word_test_pos)     
+# porterStemmer(lemmatized_word_test_pos, porter_word_test_pos)     
 # porterStemmer(lemmatized_word_train_neg, porter_word_train_neg)     
 # porterStemmer(lemmatized_word_train_pos, porter_word_train_pos) 
 
